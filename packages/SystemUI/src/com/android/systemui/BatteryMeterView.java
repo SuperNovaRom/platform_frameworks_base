@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -67,6 +68,9 @@ public class BatteryMeterView extends View implements DemoMode {
     private final RectF mButtonFrame = new RectF();
     private final RectF mClipFrame = new RectF();
     private final RectF mBoltFrame = new RectF();
+
+    public int mChameleonBatteryColor = Color.WHITE;
+    public int mChameleonBoltColor = Color.BLACK;
 
     private class BatteryTracker extends BroadcastReceiver {
         public static final int UNKNOWN_LEVEL = -1;
@@ -208,6 +212,7 @@ public class BatteryMeterView extends View implements DemoMode {
         Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         mTextPaint.setTypeface(font);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         mWarningTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mWarningTextPaint.setColor(mColors[1]);
@@ -382,5 +387,21 @@ public class BatteryMeterView extends View implements DemoMode {
            }
            postInvalidate();
         }
+    }
+
+    public void updateBattery() {
+    	BatteryTracker tracker = mDemoMode ? mDemoTracker : mTracker;
+    	
+        if (tracker.level <= 14 && !tracker.plugged) {
+            mBatteryPaint.setColor(Color.RED);
+        } else {
+            mBatteryPaint.setColor(mChameleonBatteryColor);
+            mFramePaint.setColor(Integer.parseInt("50" + String.format("%02x%02x%02x", Color.red(mChameleonBatteryColor), Color.green(mChameleonBatteryColor), Color.blue(mChameleonBatteryColor)), 16));
+        }
+
+        mBoltPaint.setColor(mChameleonBoltColor);
+        
+        mTextPaint.setColor(mChameleonBatteryColor);
+        postInvalidate();
     }
 }
