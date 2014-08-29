@@ -2414,6 +2414,12 @@ public final class Settings {
          * @hide
          */
         public static final String EGG_MODE = "egg_mode";
+        
+        /**
+         * Whether to show or hide battery percent
+         * @hide
+         */
+        public static final String SHOW_BATTERY_PERCENT = "show_battery_percent";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

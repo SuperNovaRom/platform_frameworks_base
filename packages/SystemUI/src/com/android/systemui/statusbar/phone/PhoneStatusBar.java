@@ -83,6 +83,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.systemui.BatteryPercentView;
 import com.android.systemui.DemoMode;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
@@ -537,7 +538,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mRotationLockController = new RotationLockController(mContext);
         final SignalClusterView signalCluster =
                 (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
-
+        
+        ((BatteryPercentView) mStatusBarView.findViewById(R.id.battery_percent)).addBatteryController(mBatteryController);
 
         mNetworkController.addSignalCluster(signalCluster);
         signalCluster.setNetworkController(mNetworkController);
