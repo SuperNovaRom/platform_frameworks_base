@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -24,6 +25,7 @@ public class BatteryPercentView extends TextView implements
 	
 	BatteryController mBatteryController;
 	Context mContext;
+	int mColor;
 
 	public BatteryPercentView(Context context) {
 		this(context, null, 0);
@@ -70,13 +72,26 @@ public class BatteryPercentView extends TextView implements
 			update();
 		}
 		
-		private void update() {
-			if(Settings.System.getInt(mContext.getContentResolver(),
-					Settings.System.SHOW_BATTERY_PERCENT, 1) == 0)
-				setVisibility(View.GONE);
-			else
-				setVisibility(View.VISIBLE);
+	}
+	
+	private void update() {
+		if(Settings.System.getInt(mContext.getContentResolver(),
+				Settings.System.SHOW_BATTERY_PERCENT, 1) == 0)
+			setVisibility(View.GONE);
+		else
+			setVisibility(View.VISIBLE);
+		
+		postInvalidate();
+	}
+	
+	public void setColor(boolean isBlack) {
+		if(isBlack) { 
+			setTextColor(mContext.getResources().getColor(R.color.battery_percent_color));
+		} else {
+			setTextColor(mContext.getResources().getColor(R.color.battery_percent_color_dark));
 		}
+		
+		update();
 	}
 
 }

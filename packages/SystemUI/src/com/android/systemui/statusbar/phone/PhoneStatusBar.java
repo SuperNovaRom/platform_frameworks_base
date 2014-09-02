@@ -2887,7 +2887,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 				mStatusBarColor = mSysColor;
 			}
 			mBattery.mChameleonBoltColor = mStatusBarColor;
-                        mBattery.updateBattery();
+            mBattery.updateBattery();
+            ((BatteryPercentView) mStatusBarView.findViewById(R.id.battery_percent))
+            		.setColor(!isGray(mSysColor));
 			transform(isGray(mSysColor));
 			if (mTransparent) {
 				updateBackgroundDelayed();
